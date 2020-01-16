@@ -1,0 +1,63 @@
+//
+// exp.grammar: example grammar based on simple expressions
+// To build:
+//      sablecc exp.grammar
+//      javac Eval.java
+//
+
+Helpers
+   digit = ['0'..'9'];
+   space = ' ';
+   newline = 10;
+
+Tokens
+
+   lparen = '(';
+   rparen = ')';
+   plus   = '+';
+   minus  = '-';
+   times  = '*';
+   div    = '/';
+
+   number = digit+;
+   whitespace = (space | newline)*;
+
+Ignored Tokens
+   whitespace;
+
+Productions
+
+//   exp    = {add} lparen plus term exp+ rparen
+//          | {subt} lparen minus term exp+ rparen
+//          | {times} lparen times term exp+ rparen
+//          | {div} lparen div term exp+ rparen
+//	      | {num} number
+//          ;
+//   term   = {num} number
+//          | {exp} exp
+//          ;
+
+   klam   = lparen op [first]:term [second]:term+ rparen
+          ;
+   op     = {add} plus
+          | {sub} minus
+          | {mul} times
+          | {div} div
+          ;
+   term   = {klam} klam
+          | {num} number
+          ;
+
+//   exp    = {term} term
+//          | {add} plus exp term
+//          | {subt} minus exp term
+//          ;
+//   term   = {factor} factor
+//          | {times} times term factor
+//          | {div} div term factor
+//          ;
+//  factor = {num} number
+//          | {nested} lparen exp rparen
+//          ;
+
+
